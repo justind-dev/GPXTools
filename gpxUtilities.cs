@@ -79,5 +79,38 @@ namespace GPXTools
             // calculate the result
             return (c * r);
         }
+
+        public double GetSlopeBetweenTrackPoints(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
+        {
+            var elevationChange = GetElevationChangeBetweenTrackPoints(trackPoint1, trackPoint2);
+            var distance = GetDistanceMiles(trackPoint1, trackPoint2);
+            var slope  = (elevationChange / distance) * 100;
+            return slope;
+        }
+
+        public double GetElevationChangeBetweenTrackPoints(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
+        {
+            var ElevationChange = trackPoint1.elevation - trackPoint2.elevation;
+            return ElevationChange;
+        }
+
+        public double GetMphBetweenTrackPoints(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
+        {
+            var distance = GetDistanceMiles(trackPoint1, trackPoint2);
+            var time = (trackPoint1.time - trackPoint2.time).TotalHours;
+            var speed = distance / time;
+            return speed;
+        }
+
+        public double GetKphBetweenTrackPoints(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
+        {
+            var distance = GetDistanceKilometers(trackPoint1, trackPoint2);
+            var time = (trackPoint1.time - trackPoint2.time).TotalHours;
+            var speed = distance / time;
+            return speed;
+        }
+
+
+
     }
 }
