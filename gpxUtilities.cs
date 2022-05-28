@@ -22,7 +22,7 @@ namespace GPXTools
             return (angleIn10thofaDegree *
                            Math.PI) / 180;
         }
-        public double GetDistanceKilometers(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
+        public double GetDistanceBetweenTrackPointsKilometers(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
         {
 
             // The math module contains
@@ -51,7 +51,7 @@ namespace GPXTools
             // calculate the result
             return (c * r);
         }
-        public double GetDistanceMiles(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
+        public double GetDistanceBetweenTrackPointsMiles(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
         {
             // The math module contains
             // a function named toRadians
@@ -80,10 +80,41 @@ namespace GPXTools
             return (c * r);
         }
 
+        public double GetTrackTotalDistanceMiles(GpxTrack track)
+        {
+            GpxTrackPoint lastTrackPoint = track.TrackPoints[track.TrackPoints.Count - 1];
+            var i = track.TrackPoints.Count - 1;
+            var totalDistance = 0.00;
+            while (i > 0)
+            {
+                var currentTrackPoint = track.TrackPoints[i];
+                var distance = GetDistanceBetweenTrackPointsMiles(currentTrackPoint, lastTrackPoint);
+                totalDistance += distance;
+                lastTrackPoint = currentTrackPoint;
+                i--;
+            }
+            return totalDistance;
+        }
+        public double GetTrackTotalDistanceKilometers(GpxTrack track)
+        {
+            GpxTrackPoint lastTrackPoint = track.TrackPoints[track.TrackPoints.Count - 1];
+            var i = track.TrackPoints.Count - 1;
+            var totalDistance = 0.00;
+            while (i > 0)
+            {
+                var currentTrackPoint = track.TrackPoints[i];
+                var distance = GetDistanceBetweenTrackPointsMiles(currentTrackPoint, lastTrackPoint);
+                totalDistance += distance;
+                lastTrackPoint = currentTrackPoint;
+                i--;
+            }
+            return totalDistance;
+        }
+
         public double GetSlopeBetweenTrackPoints(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
         {
             var elevationChange = GetElevationChangeBetweenTrackPoints(trackPoint1, trackPoint2);
-            var distance = GetDistanceMiles(trackPoint1, trackPoint2);
+            var distance = GetDistanceBetweenTrackPointsMiles(trackPoint1, trackPoint2);
             var slope  = (elevationChange / distance) * 100;
             return slope;
         }
@@ -94,23 +125,55 @@ namespace GPXTools
             return ElevationChange;
         }
 
-        public double GetMphBetweenTrackPoints(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
+        public double GetSpeedBetweenTrackPointsMph(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
         {
-            var distance = GetDistanceMiles(trackPoint1, trackPoint2);
+            var distance = GetDistanceBetweenTrackPointsMiles(trackPoint1, trackPoint2);
             var time = (trackPoint1.time - trackPoint2.time).TotalHours;
             var speed = distance / time;
             return speed;
         }
 
-        public double GetKphBetweenTrackPoints(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
+        public double GetSpeedBetweenTrackPointsKph(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
         {
-            var distance = GetDistanceKilometers(trackPoint1, trackPoint2);
+            var distance = GetDistanceBetweenTrackPointsKilometers(trackPoint1, trackPoint2);
             var time = (trackPoint1.time - trackPoint2.time).TotalHours;
             var speed = distance / time;
             return speed;
         }
+        /// The below are returning NaN at the moment. This needs debugged.
+        public double GetTrackAverageSpeedMph(GpxTrack track)
+        {
+            GpxTrackPoint lastTrackPoint = track.TrackPoints[track.TrackPoints.Count - 1];
+            var i = track.TrackPoints.Count - 1;
+            List<double> speeds = new List<double>();
+            while (i > 0)
+            {
+                var currentTrackPoint = track.TrackPoints[i];
+                var speed = GetSpeedBetweenTrackPointsMph(currentTrackPoint, lastTrackPoint);
+                speeds.Add(speed);
+                lastTrackPoint = currentTrackPoint;
+                i--;
+            }
+            
+            return speeds.Average();
+        }
+        public double GetTrackAverageSpeedKph(GpxTrack track)
+        {
+            GpxTrackPoint lastTrackPoint = track.TrackPoints[track.TrackPoints.Count - 1];
+            var i = track.TrackPoints.Count - 1;
+            List<double> speeds = new List<double>();
+            while (i > 0)
+            {
+                var currentTrackPoint = track.TrackPoints[i];
+                var speed = GetSpeedBetweenTrackPointsKph(currentTrackPoint, lastTrackPoint);
+                speeds.Add(speed);
+                lastTrackPoint = currentTrackPoint;
+                i--;
+            }
 
-
+            return speeds.Average();
+        }
+        ///
 
     }
 }
