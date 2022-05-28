@@ -53,7 +53,6 @@ namespace GPXTools
         }
         public double GetDistanceMiles(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
         {
-
             // The math module contains
             // a function named toRadians
             // which converts from degrees
