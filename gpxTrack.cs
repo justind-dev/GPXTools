@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GPXTools
 {
-    public class gpxTrack
+    public class GpxTrack
     {
         public string Name { get; set; }
-        public List<gpxTrackPoint> TrackPoints { get; set; }
+        public List<GpxTrackPoint> TrackPoints { get; set; }
     }
 }

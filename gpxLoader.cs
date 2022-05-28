@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace GPXTools
 {
-    public class gpxLoader
+    public class GpxLoader
     {
         /// <summary>
         /// Load the Xml document for parsing
@@ -37,7 +37,7 @@ namespace GPXTools
         /// <param name="sFile">Fully qualified file name (local)</param>
         /// <returns>string containing line delimited waypoints from the
         /// file (for test)</returns>
-        public List<gpxTrack> LoadGPXTracks(string sFile)
+        public List<GpxTrack> LoadGPXTracks(string sFile)
         {
             XDocument gpxDoc = GetGpxDoc(sFile);
             XNamespace gpx = GetGpxNameSpace();
@@ -59,14 +59,14 @@ namespace GPXTools
                                 }
                               )
                          };
-            List<gpxTrack> gpxTracks = new List<gpxTrack>();
+            List<GpxTrack> gpxTracks = new List<GpxTrack>();
             
             foreach (var trk in tracks)
             {
                 // Populate track data objects.
-                gpxTrack newGpxTrack = new gpxTrack();
-                newGpxTrack.TrackPoints = new List<gpxTrackPoint>();
-                List<gpxTrackPoint> points = new List<gpxTrackPoint>();
+                GpxTrack newGpxTrack = new GpxTrack();
+                newGpxTrack.TrackPoints = new List<GpxTrackPoint>();
+                List<GpxTrackPoint> points = new List<GpxTrackPoint>();
                 newGpxTrack.Name = trk.Name;
 
                 foreach (var trkSeg in trk.Segs)
@@ -74,7 +74,7 @@ namespace GPXTools
                     // Populate detailed track segments
                     // in the object model here.
 
-                    newGpxTrack.TrackPoints.Add(new gpxTrackPoint()
+                    newGpxTrack.TrackPoints.Add(new GpxTrackPoint()
                     {
                         name = trk.Name,
                         latitude = Double.Parse(trkSeg.Latitude),

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace GPXTools
 {
-    public struct gpxTrackPoint
+    public struct GpxTrackPoint
     {
-        public string name;
         public double elevation;
         public double latitude , longitude;
         public DateTime time;

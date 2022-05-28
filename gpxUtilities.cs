@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GPXTools
 {
-    public class gpxUtilities
+    public class GpxUtilities
     {
         static double kilometersToMiles(double kilometers)
         {
@@ -22,7 +22,7 @@ namespace GPXTools
             return (angleIn10thofaDegree *
                            Math.PI) / 180;
         }
-        public double GetDistanceKilometers(gpxTrackPoint trackPoint1, gpxTrackPoint trackPoint2)
+        public double GetDistanceKilometers(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
         {
 
             // The math module contains
@@ -51,7 +51,7 @@ namespace GPXTools
             // calculate the result
             return (c * r);
         }
-        public double GetDistanceMiles(gpxTrackPoint trackPoint1, gpxTrackPoint trackPoint2)
+        public double GetDistanceMiles(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
         {
 
             // The math module contains

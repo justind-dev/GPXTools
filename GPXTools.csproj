@@ -41,11 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="gpxLoader.cs" />
-    <Compile Include="gpxTrack.cs" />
-    <Compile Include="gpxTrackPoint.cs" />
+    <Compile Include="GpxLoader.cs" />
+    <Compile Include="GpxTrack.cs" />
+    <Compile Include="GpxTrackPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="gpxUtilities.cs" />
+    <Compile Include="GpxUtilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
