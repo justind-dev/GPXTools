@@ -76,7 +76,6 @@ namespace GPXTools
 
                     newGpxTrack.TrackPoints.Add(new GpxTrackPoint()
                     {
-                        name = trk.Name,
                         latitude = Double.Parse(trkSeg.Latitude),
                         longitude = Double.Parse(trkSeg.Longitude),
                         elevation = double.Parse(trkSeg.Elevation),
