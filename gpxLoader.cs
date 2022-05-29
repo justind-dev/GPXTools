@@ -39,6 +39,7 @@ namespace GPXTools
         /// file (for test)</returns>
         public List<GpxTrack> LoadGPXTracks(string sFile)
         {
+            GpxUtilities utilities = new GpxUtilities();
             XDocument gpxDoc = GetGpxDoc(sFile);
             XNamespace gpx = GetGpxNameSpace();
             var tracks = from track in gpxDoc.Descendants(gpx + "trk")
@@ -83,6 +84,16 @@ namespace GPXTools
 
                     });
                 }
+                newGpxTrack.TotalDistanceKilometers = utilities.GetTrackTotalDistanceKilometers(newGpxTrack);
+
+                newGpxTrack.TotalDistanceMiles = utilities.GetTrackTotalDistanceMiles(newGpxTrack);
+
+                newGpxTrack.SpeedsKph = utilities.GetTrackSpeedsKph(newGpxTrack);
+
+                newGpxTrack.SpeedsMph = utilities.GetTrackSpeedsMph(newGpxTrack);
+
+                newGpxTrack.Slopes = utilities.GetTrackSlopePoints(newGpxTrack);
+
                 gpxTracks.Add(newGpxTrack);
             }
             return gpxTracks;

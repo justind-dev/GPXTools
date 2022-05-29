@@ -8,13 +8,13 @@ namespace GPXTools
 {
     public class GpxUtilities
     {
-        static double kilometersToMiles(double kilometers)
+        static double KilometersToMiles(double kilometers)
         {
             double miles = kilometers / 1.6;
             return miles;
         }
 
-        static double toRadians(
+        static double ToRadians(
        double angleIn10thofaDegree)
         {
             // Angle in 10th
@@ -29,10 +29,10 @@ namespace GPXTools
             // a function named toRadians
             // which converts from degrees
             // to radians.
-            var lon1 = toRadians(trackPoint1.longitude);
-            var lon2 = toRadians(trackPoint2.longitude);
-            var lat1 = toRadians(trackPoint1.latitude);
-            var lat2 = toRadians(trackPoint2.latitude);
+            var lon1 = ToRadians(trackPoint1.longitude);
+            var lon2 = ToRadians(trackPoint2.longitude);
+            var lat1 = ToRadians(trackPoint1.latitude);
+            var lat2 = ToRadians(trackPoint2.latitude);
 
             // Haversine formula
             double dlon = lon2 - lon1;
@@ -57,10 +57,10 @@ namespace GPXTools
             // a function named toRadians
             // which converts from degrees
             // to radians.
-            var lon1 = toRadians(trackPoint1.longitude);
-            var lon2 = toRadians(trackPoint2.longitude);
-            var lat1 = toRadians(trackPoint1.latitude);
-            var lat2 = toRadians(trackPoint2.latitude);
+            var lon1 = ToRadians(trackPoint1.longitude);
+            var lon2 = ToRadians(trackPoint2.longitude);
+            var lat1 = ToRadians(trackPoint1.latitude);
+            var lat2 = ToRadians(trackPoint2.latitude);
 
             // Haversine formula
             double dlon = lon2 - lon1;
@@ -140,40 +140,59 @@ namespace GPXTools
             var speed = distance / time;
             return speed;
         }
-        /// The below are returning NaN at the moment. This needs debugged.
-        public double GetTrackAverageSpeedMph(GpxTrack track)
+
+        public List<double> GetTrackSpeedsMph(GpxTrack track)
         {
-            GpxTrackPoint lastTrackPoint = track.TrackPoints[track.TrackPoints.Count - 1];
-            var i = track.TrackPoints.Count - 1;
             List<double> speeds = new List<double>();
-            while (i > 0)
+
+            GpxTrackPoint lastTrackPoint = track.TrackPoints[0];
+            var i = 1;
+            while (i < track.TrackPoints.Count-1)
             {
                 var currentTrackPoint = track.TrackPoints[i];
                 var speed = GetSpeedBetweenTrackPointsMph(currentTrackPoint, lastTrackPoint);
-                speeds.Add(speed);
                 lastTrackPoint = currentTrackPoint;
-                i--;
+                i++;
+                speeds.Add(speed);
             }
-            
-            return speeds.Average();
+
+            return speeds;
         }
-        public double GetTrackAverageSpeedKph(GpxTrack track)
+        public List<double> GetTrackSpeedsKph(GpxTrack track)
         {
-            GpxTrackPoint lastTrackPoint = track.TrackPoints[track.TrackPoints.Count - 1];
-            var i = track.TrackPoints.Count - 1;
             List<double> speeds = new List<double>();
-            while (i > 0)
+
+            GpxTrackPoint lastTrackPoint = track.TrackPoints[0];
+            var i = 1;
+            while (i < track.TrackPoints.Count - 1)
             {
                 var currentTrackPoint = track.TrackPoints[i];
                 var speed = GetSpeedBetweenTrackPointsKph(currentTrackPoint, lastTrackPoint);
-                speeds.Add(speed);
                 lastTrackPoint = currentTrackPoint;
-                i--;
+                i++;
+                speeds.Add(speed);
             }
 
-            return speeds.Average();
+            return speeds;
         }
-        ///
+
+        public List<double> GetTrackSlopePoints(GpxTrack track)
+        {
+            List<double> slopes = new List<double>();
+            GpxTrackPoint lastTrackPoint = track.TrackPoints[0];
+            var i = 1;
+            while (i < track.TrackPoints.Count - 1)
+            {
+                var currentTrackPoint = track.TrackPoints[i];
+                var elevationChange = GetElevationChangeBetweenTrackPoints(lastTrackPoint, currentTrackPoint);
+                var distance = GetDistanceBetweenTrackPointsMiles(lastTrackPoint, currentTrackPoint);
+                var slope = (elevationChange / distance) * 100;
+                slopes.Add(slope);
+                i++;
+            }
+
+            return slopes;
+        }
 
     }
 }
