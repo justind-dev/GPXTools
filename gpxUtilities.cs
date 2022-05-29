@@ -127,8 +127,11 @@ namespace GPXTools
                 ElevationChange = trackPoint2.elevation - trackPoint1.elevation;
                 return ElevationChange;
             }
-            ElevationChange = trackPoint1.elevation - trackPoint2.elevation;
-            return ElevationChange;
+            else
+            {
+                ElevationChange = trackPoint1.elevation - trackPoint2.elevation;
+                return ElevationChange;
+            }
         }
 
         public double GetSpeedBetweenTrackPointsMph(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
@@ -185,17 +188,17 @@ namespace GPXTools
         public List<double> GetTrackSlopePoints(GpxTrack track)
         {
             List<double> slopes = new List<double>();
-            GpxTrackPoint lastTrackPoint = track.TrackPoints[0];
+            GpxTrackPoint lastTrackPoint = track.TrackPoints.First();
             var i = 1;
-            while (i < track.TrackPoints.Count - 1)
+            while (i <= track.TrackPoints.Count-1)
             {
                 var currentTrackPoint = track.TrackPoints[i];
-                var elevationChange = GetElevationChangeBetweenTrackPoints(lastTrackPoint, currentTrackPoint);
-                var distance = GetDistanceBetweenTrackPointsMiles(lastTrackPoint, currentTrackPoint);
-                var slope = (elevationChange / distance) * 100;
-                slopes.Add(slope);
+                var slope = GetSlopeBetweenTrackPoints(lastTrackPoint, currentTrackPoint);
+                slopes.Add(Math.Round(slope,2));
+                //debug
+                Console.WriteLine(slope);
                 i++;
-            }
+            } 
 
             return slopes;
         }
