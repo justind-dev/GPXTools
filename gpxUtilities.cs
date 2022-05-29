@@ -121,7 +121,13 @@ namespace GPXTools
 
         public double GetElevationChangeBetweenTrackPoints(GpxTrackPoint trackPoint1, GpxTrackPoint trackPoint2)
         {
-            var ElevationChange = trackPoint1.elevation - trackPoint2.elevation;
+            double ElevationChange;
+            if (trackPoint2.elevation > trackPoint1.elevation)
+            {
+                ElevationChange = trackPoint2.elevation - trackPoint1.elevation;
+                return ElevationChange;
+            }
+            ElevationChange = trackPoint1.elevation - trackPoint2.elevation;
             return ElevationChange;
         }
 

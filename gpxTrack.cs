@@ -95,12 +95,18 @@ namespace GPXTools
         {
             return Slopes.Min();
         }
-
+        /// <summary>
+        /// Returns the total distance of the track segments in miles.
+        /// </summary>
+        /// <returns> Returns the total distance of the track segments in miles.</returns>
         public double DistanceMiles()
         {
             return TotalDistanceMiles;
         }
-
+        /// <summary>
+        /// Returns the total distance of the track segments in kilometers.
+        /// </summary>
+        /// <returns> Returns the total distance of the track segments in kilometers.</returns>
         public double DistanceKilometers()
         {
             return TotalDistanceKilometers;
