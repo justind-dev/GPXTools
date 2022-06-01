@@ -125,11 +125,13 @@ namespace GPXTools
             if (trackPoint2.elevation > trackPoint1.elevation)
             {
                 ElevationChange = trackPoint2.elevation - trackPoint1.elevation;
+                Console.WriteLine($"Trackpoint2 Elevation: {trackPoint2.elevation} - Trackpoint1 Elevation: {trackPoint1.elevation} = Elevation Change: {ElevationChange}");
                 return ElevationChange;
             }
             else
             {
                 ElevationChange = trackPoint1.elevation - trackPoint2.elevation;
+                Console.WriteLine($"Trackpoint1 Elevation: {trackPoint1.elevation} - Trackpoint2 Elevation: {trackPoint2.elevation} = Elevation Change: {ElevationChange}");
                 return ElevationChange;
             }
         }
@@ -195,8 +197,6 @@ namespace GPXTools
                 var currentTrackPoint = track.TrackPoints[i];
                 var slope = GetSlopeBetweenTrackPoints(lastTrackPoint, currentTrackPoint);
                 slopes.Add(Math.Round(slope,2));
-                //debug
-                Console.WriteLine(slope);
                 i++;
             } 
 
